@@ -2,10 +2,10 @@
 
 ## Formula One Project
 
-This is a project that simulate the presentation of the **F1 Championship**.<br>
-It contains different folders with different projects about Formula One.<br>
+questo progetto simula il funzionamento del sito per la gestioine del **F1 Championship**.<br>
+Contiene diverse cartelle con diversi progetti riguardanti Formula Uno.<br>
 
-## Documentation
+## Documentazioni
 
 - [C#](https://docs.microsoft.com/it-it/dotnet/csharp/), .NET solutions like Web APIs, Web Forms, ASPX pages and others... 
 - [HTML5](https://www.w3schools.com/html/default.asp)
@@ -15,28 +15,28 @@ It contains different folders with different projects about Formula One.<br>
 - [Bootstrap](https://getbootstrap.com/)
 - [SQL](https://www.w3schools.com/sql/default.asp)
 
-I used the Visual Studio 2019 platform.<br>
-I also used Microsoft SQL Server Management Studio 18 platform for SQL.
+Ho usato Visual Studio 2019 platform.<br>
+Ho anche usato Microsoft SQL Server Management Studio 18 platform for SQL.
 
-## Projects
+## Progetto
 
-### Project 5 - FormulaOneWebApi
+### progetto 5 - FormulaOneWebApi
 
-Api project that add the possibility to show an XML of the Database datas.
+Api project
 
-### Project 4 - FormulaOneWebForm
+### progetto 4 - FormulaOneWebForm
 
-An ASPX.NET page that shows the Database tables (minimal GUI).
+Una pagina ASPX.NET che visualizza le tabelle del Database (minimal GUI).
 
-### Project 3 - FormulaOneCrudForm
+### progetto 3 - FormulaOneCrudForm
 
-A Form with simple controls that displays in a more user-friendly screen<br>
+Una Form con semplici controlli che visualizza i dati in modo più user-friendly<br>
 the actions that the Console project can do with more improvements.
 
-### Project 2 - FormulaOneDll
+### progetto 2 - FormulaOneDll
 
-A series of classes that simplify the management of the entire project.
+una serie di classi che semplificano la gestione dei dati.
 
-### Project 1 - FormulaOneBatch
+### progetto 1 - FormulaOneBatch
 
-A simple C# Console project that access a local Database. 
+un semplice progetto console per l'accesso al database
