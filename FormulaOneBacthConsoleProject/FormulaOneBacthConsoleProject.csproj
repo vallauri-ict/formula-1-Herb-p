@@ -63,6 +63,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FormulaOneDataSet.cs">
+      <DependentUpon>FormulaOneDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="FormulaOneDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

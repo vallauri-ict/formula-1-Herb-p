@@ -16,9 +16,14 @@ namespace FormulaOneWebApiProject.Controllers
         {
             return db.Teams;
         }
-        public IHttpActionResult GetTeams(int id)
+        public IHttpActionResult GetTeams(string id)
         {
-            return NotFound();
+            var team = db.Teams.FirstOrDefault((t) => t.ID == Convert.ToInt32(id));
+            if (team == null)
+            {
+                return NotFound();
+            }
+            return Ok(team);
         }
     }
 }

@@ -16,9 +16,14 @@ namespace FormulaOneWebApiProject.Controllers
         {
             return db.Countries.Values;
         }
-        public IHttpActionResult GetCountries(int id)
+        public IHttpActionResult GetCountries(string id)
         {
-            return NotFound();
+            var country = db.Countries[id];
+            if (country == null)
+            {
+                return NotFound();
+            }
+            return Ok(country);
         }
     }
 }

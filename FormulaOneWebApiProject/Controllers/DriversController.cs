@@ -21,9 +21,14 @@ namespace FormulaOneWebApiProject.Controllers
         {
             return db.Drivers.Values;
         }
-        public IHttpActionResult GetDrivers(int id)
+        public IHttpActionResult GetDrivers(string id)
         {
-            return NotFound();
+            var driver = db.Drivers.Values.FirstOrDefault((d) => d.ID == Convert.ToInt32(id));
+            if (driver == null)
+            {
+                return NotFound();
+            }
+            return Ok(driver);
         }
     }
 }
