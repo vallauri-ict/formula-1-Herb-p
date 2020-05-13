@@ -22,7 +22,7 @@ Ho anche usato Microsoft SQL Server Management Studio 18 platform for SQL.
 
 ### progetto 5 - FormulaOneWebApi
 
-Api project
+Progetto Web ASP.NET che utilizza le web api per recuperare i dati necessari dal Database.
 
 ### progetto 4 - FormulaOneWebForm
 
