@@ -8,22 +8,21 @@ using FormulaOneDll;
 
 namespace FormulaOneWebApiProject.Controllers
 {
-    public class CountriesController : ApiController
+    public class RacesController : ApiController
     {
         DbTools db = new DbTools();
-
-        public IEnumerable<Country> GetAllCountries()
+        public IEnumerable<Race> GetAllRaces()
         {
-            return db.Countries.Values;
+            return db.Races.Values;
         }
-        public IHttpActionResult GetCountries(string id)
+        public IHttpActionResult GetRaces(string id)
         {
-            var country = db.Countries[id];
-            if (country == null)
+            var races = db.Races.Values.FirstOrDefault((d) => d.Id == Convert.ToInt32(id));
+            if (races == null)
             {
                 return NotFound();
             }
-            return Ok(country);
+            return Ok(races);
         }
     }
 }

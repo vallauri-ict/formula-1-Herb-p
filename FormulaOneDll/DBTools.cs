@@ -24,6 +24,10 @@ namespace FormulaOneDll
         private Dictionary<int, Driver> drivers;
         private Dictionary<string, Country> countries;
         private List<Team> teams;
+        private Dictionary<int,Circuit> circuits;
+        private Dictionary<int, Race> races;
+        private Dictionary<int, RacesScores> racesScores;
+        private Dictionary<int, Scores> scrores;
 
         public Dictionary<int, Driver> Drivers
         {
@@ -39,7 +43,7 @@ namespace FormulaOneDll
         {
             get
             {
-                if (this.countries == null)
+                if (this.countries == null || this.countries.Count==0)
                     this.GetCountries();
                 return this.countries;
             }
@@ -54,6 +58,50 @@ namespace FormulaOneDll
                 return teams;
             }
             set => teams = value;
+        }
+
+        public Dictionary<int, Circuit> Circuits
+        {
+            get
+            {
+                if (circuits == null || circuits.Count == 0)
+                    this.LoadCircuits();
+                return circuits;
+            }
+            set => circuits = value;
+        }
+
+        public Dictionary<int, Race> Races
+        {
+            get
+            {
+                if (races == null || races.Count == 0)
+                    this.LoadRaces();
+                return races;
+            }
+            set => races = value;
+        }
+
+        public Dictionary<int, RacesScores> RacesScores
+        {
+            get
+            {
+                if (racesScores == null || racesScores.Count == 0)
+                    this.LoadRacesScores();
+                return racesScores;
+            }
+            set => racesScores = value;
+        }
+
+        public Dictionary<int, Scores> Scores
+        {
+            get
+            {
+                if (scrores == null || scrores.Count == 0)
+                    this.LoadScores();
+                return scrores;
+            }
+            set => scrores = value;
         }
 
         //public void CreateCountriesWithSmo()
@@ -194,7 +242,9 @@ namespace FormulaOneDll
                             Lastname = reader.GetString(2),
                             Dob = reader.GetDateTime(3),
                             PlaceOfBirthday = reader.GetString(4),
-                            Country = Countries[reader.GetString(5)]
+                            Country = Countries[reader.GetString(5)],
+                            Img = reader.GetString(6),
+                            Description = reader.GetString(7)
                         };
                         this.Drivers.Add(driverIsoCode, d);
                     }
@@ -228,9 +278,129 @@ namespace FormulaOneDll
                         TechnicalChief = reader.GetString(5),
                         Chassis = reader.GetString(6),
                         FirstDriver = this.Drivers[reader.GetInt32(7)],
-                        SecondDriver = this.Drivers[reader.GetInt32(8)]
+                        SecondDriver = this.Drivers[reader.GetInt32(8)],
+                        Logo = reader.GetString(9),
+                        Img = reader.GetString(10)
                     };
                     teams.Add(t);
+                }
+                con.Close();
+                con.Dispose();
+            }
+            SqlConnection.ClearAllPools();
+        }
+        public void LoadCircuits()
+        {
+            GetCountries();
+            circuits = new Dictionary<int, Circuit>();
+            var con = new SqlConnection($@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename={WORKINGPATH}FormulaOne.mdf;Integrated Security=True");
+            using (con)
+            {
+                con.Open();
+                var command = new SqlCommand("SELECT * FROM Circuits;", con);
+                SqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    Circuit c = new Circuit();
+                    /*{
+                        Id = reader.GetInt32(0),
+                        Name = reader.GetString(1),
+                        Legth = Convert.ToInt32(reader.GetString(2)),
+                        NLaps = Convert.ToInt32(reader.GetString(3)),
+                        ExtCountry = this.Countries[reader.GetString(4)],
+                        RecordLap = reader.GetString(5),
+                        Img = reader.GetString(6),
+                    };*/
+                    c.Id = reader.GetInt32(0);
+                    c.Name = reader.GetString(1);
+                    c.Length = reader.GetInt32(2);
+                    c.NLaps = reader.GetInt32(3);
+                    c.ExtCountry = this.Countries[reader.GetString(4)];
+                    c.RecordLap = reader.GetString(5);
+                    c.Img = reader.GetString(6);
+                    circuits.Add(reader.GetInt32(0), c);
+                }
+                con.Close();
+                con.Dispose();
+            }
+            SqlConnection.ClearAllPools();
+        }
+
+        public void LoadRaces()
+        {
+            LoadCircuits();
+            races = new Dictionary<int, Race>();
+            var con = new SqlConnection($@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename={WORKINGPATH}FormulaOne.mdf;Integrated Security=True");
+            using (con)
+            {
+                con.Open();
+                var command = new SqlCommand("SELECT * FROM Races;", con);
+                SqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    Race r = new Race()
+                    {
+                        Id = reader.GetInt32(0),
+                        Name = reader.GetString(1),
+                        ExtCircuit = this.circuits[reader.GetInt32(2)],
+                        Date = reader.GetDateTime(3),
+                    };
+                    races.Add(reader.GetInt32(0), r);
+                }
+                con.Close();
+                con.Dispose();
+            }
+            SqlConnection.ClearAllPools();
+        }
+
+        public void LoadRacesScores()
+        {
+            GetDrivers();
+            LoadRaces();
+            LoadScores();
+            racesScores = new Dictionary<int, RacesScores>();
+            var con = new SqlConnection($@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename={WORKINGPATH}FormulaOne.mdf;Integrated Security=True");
+            using (con)
+            {
+                con.Open();
+                var command = new SqlCommand("SELECT * FROM RacesScores;", con);
+                SqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    RacesScores r = new RacesScores()
+                    {
+                        Id = reader.GetInt32(0),
+                        ExtDriver = this.drivers[reader.GetInt32(1)],
+                        Extpos = this.Scores[reader.GetInt32(2)], 
+                        ExtRace = this.races[reader.GetInt32(3)],
+                        FastestLap = reader.GetString(4).ToString()
+                    };
+                    racesScores.Add(reader.GetInt32(0),r);
+                }
+                con.Close();
+                con.Dispose();
+            }
+            SqlConnection.ClearAllPools();
+        }
+
+        public void LoadScores()
+        {
+            races = new Dictionary<int,Race>();
+            var con = new SqlConnection($@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename={WORKINGPATH}FormulaOne.mdf;Integrated Security=True");
+            using (con)
+            {
+                con.Open();
+                var command = new SqlCommand("SELECT * FROM Scores;", con);
+                SqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    Scores s = new Scores()
+                    {
+                        Pos = reader.GetInt32(0),
+                        Score = reader.GetInt32(1),
+                        Description = reader.GetString(2)
+                    };
+                    Scores.Add(reader.GetInt32(0),s);
                 }
                 con.Close();
                 con.Dispose();

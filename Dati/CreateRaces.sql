@@ -1,46 +1,30 @@
-CREATE TABLE [dbo].[Races]
-(
-	[id] INT NOT NULL PRIMARY KEY IDENTITY, 
-    [grandPrixName] VARCHAR(128) NOT NULL, 
-    [idCircuit] INT NOT NULL, 
-	[laps] INT NOT NULL,
-	[circuitLength] FLOAT NOT NULL,
-    [grandPrixDate] DATE NOT NULL, 
-    [country] VARCHAR(64) NOT NULL, 
-    [extCountry] CHAR(2) NOT NULL
+CREATE TABLE [dbo].[Races] (
+    [id]         INT           IDENTITY (1, 1) NOT NULL,
+    [name]       VARCHAR (128) NOT NULL,
+    [extCircuit] INT 		   NOT NULL,
+    [date]       DATE          NOT NULL,
+    PRIMARY KEY CLUSTERED ([id] ASC)
 );
 
 SET IDENTITY_INSERT [dbo].[Races] ON;
-
-INSERT INTO [dbo].[Races]
-(
-	id,
-	grandPrixName,
-	idCircuit,
-	laps,
-	circuitLength,
-	grandPrixDate,
-	country,
-	extCountry
-)
-VALUES
-(1, 'FORMULA 1 ROLEX AUSTRALIAN GRAND PRIX 2019', '3', 58, 5.303, convert(date, '17-03-2019',105), 'Australia', 'AU'),
-(2, 'FORMULA 1 GULF AIR BAHRAIN GRAND PRIX 2019', '1', 57, 5.412, convert(date, '31-03-2019',105), 'Bahrain', 'BH'),
-(3, 'FORMULA 1 HEINEKEN CHINESE GRAND PRIX 2019', '2', 56, 5.451, convert(date, '31-03-2019',105), 'China', 'CH'),
-(4, 'FORMULA 1 SOCAR AZERBAIJAN GRAND PRIX 2019', '2', 51, 5.003, convert(date, '28-04-2019',105), 'Azerbaijan', 'AZ'),
-(5, 'FORMULA 1 EMIRATES GRAN PREMIO DE ESPAÑA 2019', '2', 66, 4.655, convert(date, '12-05-2019',105), 'Spain', 'SP'),
-(6, 'FORMULA 1 GRAND PRIX DE MONACO 2019', '4', 78, 3.337, convert(date, '12-05-2019',105), 'Monaco', 'MC'),
-(7, 'FORMULA 1 PIRELLI GRAND PRIX DU CANADA 2019', '5', 70, 4.361, convert(date, '09-06-2019', 105), 'Canada', 'CA'),
-(8, 'FORMULA 1 PIRELLI GRAND PRIX DE FRANCE 2019', '2', 53, 5.842, convert(date, '23-06-2019', 105), 'France', 'FR'),
-(9, 'FORMULA 1 MYWORLD GROSSER PREIS VON ÖSTERREICH 2019', '3', 71, 4.318, convert(date, '30-06-2019', 105), 'Austria', 'AT'),
-(10, 'FORMULA 1 ROLEX BRITISH GRAND PRIX 2019', '2', 52, 5.891, convert(date, '12-07-2019', 105), 'Great Britain', 'GB'),
-(11, 'FORMULA 1 MERCEDES-BENZ GROSSER PREIS VON DEUTSCHLAND 2019', '1', 67, 4.574, convert(date, '28-07-2019',105), 'Germany', 'DE'),
-(12, 'FORMULA 1 ROLEX MAGYAR NAGYDÍJ 2019', '3', 70, 4.381, convert(date, '04-08-2019', 105), 'Hungary', 'HU'),
-(13, 'FORMULA 1 JOHNNIE WALKER BELGIAN GRAND PRIX 2019', '5', 44, 7.004, convert(date, '01-09-2019',105), 'Belgium', 'BE'),
-(14, 'FORMULA 1 GRAN PREMIO HEINEKEN DI ITALIA 2019', '3', 53, 5.793, convert(date, '08-11-2019',105), 'Italy', 'IT'),
-(15, 'FORMULA 1 SINGAPORE AIRLINES SINGAPORE GRAND PRIX 2019', '4', 61, 5.063, convert(date, '22-09-2019',105), 'Singapore', 'SG'),
-(16, 'FORMULA 1 VTB RUSSIAN GRAND PRIX 2019', '3', 53, 5.848, convert(date, '29-09-2019', 105), 'Great Britain', 'GB'),
-(17, 'FORMULA 1 VTB RUSSIAN GRAND PRIX 2019', '5', 53, 5.848, convert(date, '29-09-2019', 105), 'Great Britain', 'GB'),
-(18, 'FORMULA 1 GRAN PREMIO DE MÉXICO 2019', '2', 71, 4.304, convert(date, '25-10-2019', 105), 'Mexico', 'MX'),
-(19, 'FORMULA 1 HEINEKEN GRANDE PRÊMIO DO BRASIL 2019', '1', 71, 4.309, convert(date, '17-11-2019', 105), 'Brazil', 'BR'),
-(20, 'FORMULA 1 ETIHAD AIRWAYS ABU DHABI GRAND PRIX 2019', '3', 55, 5.554, convert(date, '01-12-2019', 105), 'United Arab Emirates', 'AE');
+INSERT INTO [dbo].[Races] ([id], [name], [extCircuit], [date]) VALUES (1, N'FORMULA 1 ROLEX AUSTRALIAN GRAND PRIX 2019', 1, N'2019-03-17');
+INSERT INTO [dbo].[Races] ([id], [name], [extCircuit], [date]) VALUES (2, N'FORMULA 1 GULF AIR BAHRAIN GRAND PRIX 2019', 2, N'2019-03-31');
+INSERT INTO [dbo].[Races] ([id], [name], [extCircuit], [date]) VALUES (3, N'FORMULA 1 HEINEKEN CHINESE GRAND PRIX 2019', 3, N'2019-03-31');
+INSERT INTO [dbo].[Races] ([id], [name], [extCircuit], [date]) VALUES (4, N'FORMULA 1 SOCAR AZERBAIJAN GRAND PRIX 2019', 4, N'2019-04-28');
+INSERT INTO [dbo].[Races] ([id], [name], [extCircuit], [date]) VALUES (5, N'FORMULA 1 EMIRATES GRAN PREMIO DE ESPAÑA 2019', 5, N'2019-05-12');
+INSERT INTO [dbo].[Races] ([id], [name], [extCircuit], [date]) VALUES (6, N'FORMULA 1 GRAND PRIX DE MONACO 2019', 6, N'2019-05-12');
+INSERT INTO [dbo].[Races] ([id], [name], [extCircuit], [date]) VALUES (7, N'FORMULA 1 PIRELLI GRAND PRIX DU CANADA 2019', 7, N'2019-06-09');
+INSERT INTO [dbo].[Races] ([id], [name], [extCircuit], [date]) VALUES (8, N'FORMULA 1 PIRELLI GRAND PRIX DE FRANCE 2019', 8, N'2019-06-23');
+INSERT INTO [dbo].[Races] ([id], [name], [extCircuit], [date]) VALUES (9, N'FORMULA 1 MYWORLD GROSSER PREIS VON ÖSTERREICH 2019', 9, N'2019-06-30');
+INSERT INTO [dbo].[Races] ([id], [name], [extCircuit], [date]) VALUES (10, N'FORMULA 1 ROLEX BRITISH GRAND PRIX 2019', 10, N'2019-07-12');
+INSERT INTO [dbo].[Races] ([id], [name], [extCircuit], [date]) VALUES (11, N'FORMULA 1 MERCEDES-BENZ GROSSER PREIS VON DEUTSCHLAND 2019', 11, N'2019-07-28');
+INSERT INTO [dbo].[Races] ([id], [name], [extCircuit], [date]) VALUES (12, N'FORMULA 1 ROLEX MAGYAR NAGYDAJ 2019', 12, N'2019-08-04');
+INSERT INTO [dbo].[Races] ([id], [name], [extCircuit], [date]) VALUES (13, N'FORMULA 1 JOHNNIE WALKER BELGIAN GRAND PRIX 2019', 13, N'2019-09-01');
+INSERT INTO [dbo].[Races] ([id], [name], [extCircuit], [date]) VALUES (14, N'FORMULA 1 GRAN PREMIO HEINEKEN DI ITALIA 2019', 14, N'2019-11-08');
+INSERT INTO [dbo].[Races] ([id], [name], [extCircuit], [date]) VALUES (15, N'FORMULA 1 SINGAPORE AIRLINES SINGAPORE GRAND PRIX 2019', 15, N'2019-09-22');
+INSERT INTO [dbo].[Races] ([id], [name], [extCircuit], [date]) VALUES (16, N'FORMULA 1 VTB RUSSIAN GRAND PRIX 2019', 16, N'2019-09-29');
+INSERT INTO [dbo].[Races] ([id], [name], [extCircuit], [date]) VALUES (17, N'FORMULA 1 VTB RUSSIAN GRAND PRIX 2019', 17, N'2019-09-29');
+INSERT INTO [dbo].[Races] ([id], [name], [extCircuit], [date]) VALUES (18, N'FORMULA 1 GRAN PREMIO DE MEXICO 2019', 18, N'2019-10-25');
+INSERT INTO [dbo].[Races] ([id], [name], [extCircuit], [date]) VALUES (19, N'FORMULA 1 HEINEKEN GRANDE PREMIO DO BRASIL 2019', 19, N'2019-11-17');
+INSERT INTO [dbo].[Races] ([id], [name], [extCircuit], [date]) VALUES (20, N'FORMULA 1 ETIHAD AIRWAYS ABU DHABI GRAND PRIX 2019', 20, N'2019-12-01');
+SET IDENTITY_INSERT [dbo].[Races] OFF;

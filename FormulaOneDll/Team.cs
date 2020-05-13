@@ -18,6 +18,8 @@ namespace FormulaOneDll
         private string chassis;
         private Driver firstDriver;
         private Driver secondDriver;
+        private string logo;
+        private string img;
         #endregion
 
         #region Constructors
@@ -35,6 +37,21 @@ namespace FormulaOneDll
             this.FirstDriver = firstDriver;
             this.SecondDriver = secondDriver;
         }
+
+        public Team(int id, string nome, string fullTeamName, Country country, string powerUnit, string technicalChief, string chassis, Driver firstDriver, Driver secondDriver,string logo,string img)
+        {
+            this.ID = id;
+            this.Name = nome;
+            this.FullTeamName = fullTeamName;
+            this.Country = country;
+            this.PowerUnit = powerUnit;
+            this.TechnicalChief = technicalChief;
+            this.Chassis = chassis;
+            this.FirstDriver = firstDriver;
+            this.SecondDriver = secondDriver;
+            this.Logo = logo;
+            this.Img = img;
+        }
         #endregion
 
         #region Properties
@@ -47,6 +64,8 @@ namespace FormulaOneDll
         public string Chassis { get => chassis; set => chassis = value; }
         public Driver FirstDriver { get => firstDriver; set => firstDriver = value; }
         public Driver SecondDriver { get => secondDriver; set => secondDriver = value; }
+        public string Logo { get => logo; set => logo = value; }
+        public string Img { get => img; set => img = value; }
         #endregion
 
         #region Methods

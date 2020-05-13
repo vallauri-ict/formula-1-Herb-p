@@ -6,81 +6,193 @@
     <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.min.js"></script>
     <script src="vue.js"></script>
     <script src="index.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="index.css" rel="stylesheet" />
+    <link rel="icon" href="favicon-32x32.png">
 </head>
 <body>
-    <div>
-        <h2>Formula One Web Api</h2>
+    <div id="navbar">
+        <ul>
+            <li>
+                <img src="https://www.formula1.com/etc/designs/fom-website/images/f1_logo.svg" />
+            </li>
+            <li>
+                <input type="button" id="loadDrivers" value="Drivers" onclick="viewDrivers()"/>
+            </li>
+            <li>
+                <input type="button" id="loadTeams" value="Teams" onclick="viewTeams()"/>
+            </li>
+            <li>
+                <input type="button" id="loadCircuits" value="Circuits" onclick="viewCircuits()"/>
+            </li>
+            <li>
+                <input type="button" id="loadRaces" value="Races" onclick="viewRaces()"/>
+            </li>
+        </ul>
     </div>
     <div id="app">
-        <h2>Select what element you want to see</h2>
-        <input type="text" id="txtId" placeholder="find by id" />
-        <input type="button" value="Teams" onclick="viewTeams();" />
-        <input type="button" value="Countries" onclick="viewCountries();" />
-        <input type="button" value="Drivers" onclick="viewDrivers();" />
-        <table v-if="teams.length > 0" id="teamsTable">
-            <thead>
+        <div class="container">
+            <table class="table is-fullwidth is-hoverable" v-if="teams.length > 0" id="teamsTable">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Logo</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Country</th>
+                        <th scope="col">First driver</th>
+                        <th scope="col">Second driver</th>
+                        <th scope="col">Info</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(item, index) in teams">
+                        <th scope="row">{{item.ID}}</th>
+                        <td><img :src="item.Logo" class="img-fluid" /></td>
+                        <td>{{item.Name}}</td>
+                        <td>{{item.Country.CountryName}}</td>
+                        <td>{{item.FirstDriver.Firstname}} {{item.FirstDriver.Lastname}}</td>
+                        <td>{{item.SecondDriver.Firstname}} {{item.SecondDriver.Lastname}}</td>
+                        <td><input type="button" value="more info" class="btn btn-info btn-sm m-0" :id="item.ID" onclick="infoTeam(this.id)" /></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="container">
+            <table class="table is-fullwidth is-hoverable" v-if="drivers.length > 0" id="driversTable">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">First Name</th>
+                        <th scope="col">Last Name</th>
+                        <th scope="col">Country</th>
+                        <th scope="col">Photo</th>
+                        <th scope="col">Info</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(item, index) in drivers">
+                        <th scope="row">{{item.ID}}</th>
+                        <td>{{item.Firstname}}</td>
+                        <td>{{item.Lastname}}</td>
+                        <td>{{item.Country.CountryName}}</td>
+                        <td class="w-25"><img :src="item.Img" class="img-fluid img-thumbnail" /></td>
+                        <td><input type="button" value="more info" class="btn btn-info btn-sm m-0" :id="item.ID" onclick="infoDriver(this.id)" /></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="container">
+            <table class="table is-fullwidth is-hoverable" v-if="circuits.length > 0" id="circuitsTable">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Length</th>
+                        <th scope="col">N°Laps</th>
+                        <th scope="col">Country</th>
+                        <th scope="col">Image</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(item, index) in circuits">
+                        <th scope="row">{{item.Id}}</th>
+                        <td>{{item.Name}}</td>
+                        <td>{{item.Length}}</td>
+                        <td>{{item.NLaps}}</td>
+                        <td>{{item.ExtCountry.CountryName}}</td>
+                        <td><img :src="item.Img" class="img-fluid img-thumbnail" /></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="container">
+            <table class="table is-fullwidth is-hoverable" v-if="races.length > 0" id="racesTable">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Circuit</th>
+                        <th scope="col">Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(item, index) in races">
+                        <th scope="row">{{item.Id}}</th>
+                        <td>{{item.Name}}</td>
+                        <td>{{item.ExtCircuit.Name}}</td>
+                        <td>{{new Date(item.Date).toLocaleDateString()}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="card" style="width: 70rem;vertical-align:central;" v-if="infoDriver">
+            <h1 style="align-self:center;">{{infoDriver.Firstname}} {{infoDriver.Lastname}}</h1>
+            <table>
                 <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>FullTeamName</th>
-                    <th>Country</th>
-                    <th>Power unit</th>
-                    <th>Technical chief</th>
-                    <th>Chassis</th>
-                    <th>First driver</th>
-                    <th>Second driver</th>
+                    <td width="50%">
+                        <img :src="infoDriver.Img" class="img-fluid img-thumbnail" style="height:500px;width:500px;align-self:center;" />
+                    </td>
+                    <td>
+                        <table class="table table-hover">
+                            <tr>
+                                <td style="font-weight:bold;font-size:15px;">Date Of Birth: </td>
+                                <td style="font-size:15px;">{{new Date(infoDriver.Dob).toLocaleDateString()}}</td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight:bold;font-size:15px;">Place Of Birth: </td>
+                                <td style="font-size:15px;">{{infoDriver.PlaceOfBirthday}}</td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight:bold;font-size:15px;">Country: </td>
+                                <td style="font-size:15px;">{{infoDriver.Country.CountryName}}</td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight:bold;font-size:15px;vertical-align:top">Description: </td>
+                                <td style="font-size:15px;">{{infoDriver.Description}}</td>
+                            </tr>
+                        </table>
+                    </td>
                 </tr>
-            </thead>
-            <tbody>
-                <tr v-for="(item, index) in teams">
-                    <td>{{item.ID}}</td>
-                    <td>{{item.Name}}</td>
-                    <td>{{item.FullTeamName}}</td>
-                    <td>{{item.Country.CountryName}}</td>
-                    <td>{{item.PowerUnit}}</td>
-                    <td>{{item.TechnicalChief}}</td>
-                    <td>{{item.Chassis}}</td>
-                    <td>{{item.FirstDriver.Firstname}} {{item.FirstDriver.Lastname}}</td>
-                    <td>{{item.SecondDriver.Firstname}} {{item.SecondDriver.Lastname}}</td>
-                </tr>
-            </tbody>
-        </table>
-
-        <table class="table is-fullwidth is-hoverable" v-if="drivers.length > 0" id="driversTable">
-            <thead>
+            </table>
+        </div>
+        <div class="card" style="width: 70rem;vertical-align:central;" v-if="infoTeam">
+            <h1 style="align-self:center;">{{infoTeam.FullTeamName}}</h1>
+            <table>
                 <tr>
-                    <th>ID</th>
-                    <th>First name</th>
-                    <th>Last name</th>
-                    <th>DOB</th>
-                    <th>Country</th>
+                    <td width="50%">
+                        <img :src="infoTeam.Img" class="img-fluid img-thumbnail" style="height:200px;width:450px;align-self:center;" />
+                    </td>
+                    <td>
+                        <table class="table table-hover">
+                            <tr>
+                                <td style="font-weight:bold;font-size:15px;">Country: </td>
+                                <td style="font-size:15px;">{{infoTeam.Country.CountryName}}</td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight:bold;font-size:15px;">Power Unit: </td>
+                                <td style="font-size:15px;">{{infoTeam.PowerUnit}}</td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight:bold;font-size:15px;">Technical Chief: </td>
+                                <td style="font-size:15px;">{{infoTeam.TechnicalChief}}</td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight:bold;font-size:15px;vertical-align:top">Chassis: </td>
+                                <td style="font-size:15px;">{{infoTeam.Chassis}}</td>
+                            </tr>
+                            <tr class="driver" :id="infoTeam.FirstDriver.ID" onclick="infoDriver(this.id)">
+                                <td style="font-weight:bold;font-size:15px;">First Driver: </td>
+                                <td style="font-size:15px;">{{infoTeam.FirstDriver.Firstname}} {{infoTeam.FirstDriver.Lastname}}</td>
+                            </tr>
+                            <tr class="driver" :id="infoTeam.SecondDriver.ID" onclick="infoDriver(this.id)">
+                                <td style="font-weight:bold;font-size:15px;vertical-align:top">Second Driver: </td>
+                                <td style="font-size:15px;">{{infoTeam.SecondDriver.Firstname}} {{infoTeam.SecondDriver.Lastname}}</td>
+                            </tr>
+                        </table>
+                    </td>
                 </tr>
-            </thead>
-            <tbody>
-                <tr v-for="(item, index) in drivers">
-                    <td>{{item.ID}}</td>
-                    <td>{{item.Firstname}}</td>
-                    <td>{{item.Lastname}}</td>
-                    <td>{{new Date(item.DOB)}}</td>
-                    <td>{{item.Country.CountryName}}</td>
-                </tr>
-            </tbody>
-        </table>
-
-        <table class="table is-fullwidth is-hoverable" v-if="countries.length > 0" id="countryTable">
-            <thead>
-                <tr>
-                    <th>Cod</th>
-                    <th>Name</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="(item, index) in countries">
-                    <td>{{item.CountryCode}}</td>
-                    <td>{{item.CountryName}}</td>
-                </tr>
-            </tbody>
-        </table>
+            </table>
+        </div>
     </div>
 </body>
 </html>
